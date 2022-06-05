@@ -11,11 +11,11 @@
     align-items:center;
 }
 .profile-container{
-    width: 300px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: auto;
+    min-height: 450px;
     background-color: rgb(255, 255, 255);
     padding:20px;
     border-radius: 10px;
@@ -39,6 +39,7 @@
 }
 .p-rows p{
     padding-left: 20px;
+    color: rgba(0, 0, 0, 0.651);
 }
 .p-rows h2{
     color: rgba(0, 9, 6, 0.829);
@@ -59,7 +60,8 @@
 @media only screen and (max-width: 600px) {
     .profile-container{
         margin-top: 100px;
-        height: 200px;
+        height: 550px;
+        width: 95%;
     }
     .profile-header{
         margin-top: 100px;

@@ -31,12 +31,12 @@
     letter-spacing: 1px;
 }
 
-.login-container.student{
+.login-container.admin{
     width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 210px;
+    min-height: 300px;
     background-color: rgb(255, 255, 255);
     padding:20px;
     border-radius: 10px;
@@ -51,8 +51,15 @@
     font-size: 1.2rem;
     font-weight: 600;
 }
+.rows .tbn{
+    color: white;
+}
 .rows .input-field{
     width: 100%;
+}
+.rows .outputBox{
+    width: 100%;
+    margin: 0px;
 }
 .input-field::after{
     color: rgb(1, 75, 51);

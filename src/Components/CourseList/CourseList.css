@@ -1,0 +1,22 @@
+.CourseList{
+    width: 100%;
+    height: 100%;
+    padding: 50px 100px;
+}
+
+.course-list-table{
+    background-color: #fff;
+}
+
+
+.nav-link {
+    color: black;
+}
+
+@media only screen and (max-width: 600px) {
+    .CourseList{
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+    }
+  }

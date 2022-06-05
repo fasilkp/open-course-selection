@@ -3,7 +3,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import './StudentProfile.css'
 
-function Login() {
+function StudentProfile() {
   return <div className="Profile">
   <div className="profile-container">
       <div className="p-rows  heading">
@@ -34,4 +34,4 @@ function Login() {
 }
 
 
-export default Login
+export default StudentProfile

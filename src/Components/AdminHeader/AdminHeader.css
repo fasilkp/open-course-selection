@@ -1,0 +1,29 @@
+@media (min-width: 992px){
+    .me-auto.adminHeaders{
+        display: flex;
+        flex-direction: row-reverse;
+        width: 100%;
+    }
+    .me-auto.adminHeaders a{
+        margin-left: 20px;
+    }
+}
+.navbar-light .navbar-brand.AdminHeader,
+.navbar-light .navbar-nav .nav-link.adminHeadersItem {
+    color: rgb(1, 75, 51);
+    font-weight: 650;
+}
+.navbar-light .navbar-nav .nav-link.adminHeadersItem {
+    color: black;
+    font-weight: 550;
+    font-size: .9rem;
+}
+.navbar-light .navbar-nav .nav-link.adminHeadersItem:hover {
+    color: rgb(1, 75, 51);
+    font-weight: 550;
+    font-size: .9rem;
+    height: 30px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+}
