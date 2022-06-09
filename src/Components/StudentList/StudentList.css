@@ -12,7 +12,19 @@
 .nav-link {
     color: black;
 }
-
+.input-field{
+    height: 47px;
+    width: 90%;
+}
+.input-field select{
+    margin: 0px;
+    padding: 0px;
+}
+.defailtInput{
+    background: none;
+    border: none;
+    outline: none;
+}
 @media only screen and (max-width: 600px) {
     .StudentList{
         width: 100%;

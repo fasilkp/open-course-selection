@@ -24,13 +24,13 @@
     border-radius: 50px;
 }
 .login-header h6{
-    font-size: .8rem;
+    font-size: 1rem;
     letter-spacing: -1px;
 }
 .login-header h1{
     letter-spacing: 1px;
+    font-weight: 700;
 }
-
 .login-container.admin{
     width: 300px;
     display: flex;

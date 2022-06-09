@@ -6,30 +6,25 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import React, { useState, useEffect, useContext } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import Button from "@mui/material/Button";
-import "./AdminLogin.css";
-import { Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../../Config/Firebase";
+import React, { useState, useEffect} from "react";
+import "./Display.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import {getDoc, doc} from 'firebase/firestore';
+import db from '../../Config/Firebase'
 
-function AdminLogin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function Display() {
   const navigate = useNavigate();
-  const handleLogin = () => {
-    console.log(email + "," + password);
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
-
+  const location = useLocation();
+  const [student, setStudent]=useState({})
+  const {regNo, heading}=location.state;
+  useEffect(()=>{
+    const fetchData = async () => {
+    const queryCourses = await getDoc(doc(db, "Students", regNo ));
+            setStudent(queryCourses.data());
+          }
+          fetchData()
+            .catch(console.error);
+  },[])
   return (
     <div className="Login">
       <div className="login-header">
@@ -42,44 +37,21 @@ function AdminLogin() {
       </div>
       <div className="login-container admin">
         <div className="rows">
-          <h2>LOGIN</h2>
+          <h1>{heading}</h1>
         </div>
-        <div className="rows">
-       
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label style={{display:"flex",justifyContent:"flex-start"}}>Email address</Form.Label>
-            <Form.Control type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            placeholder="name@example.com" />
-          </Form.Group>
-        </div>
-        <div className="rows">
-          <Form.Label htmlFor="inputPassword5" style={{display:"flex",justifyContent:"flex-start"}}>Password</Form.Label>
-          <Form.Control
-            type="password"
-            id="inputPassword5"
-            placeholder="Enter password"
-            aria-describedby="passwordHelpBlock"
-            value={password}
-              onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="rows">
-          <Button
-            className="btn"
-            variant="contained"
-            disabled={email === "" || password === ""}
-            onClick={handleLogin}
-          >
-            Login
-          </Button>
-        </div>
+        {student?.regNo &&
+
+        <div className="rows" >
+          <h6><b>Register No: </b>{student.regNo}</h6>
+          <h6><b>Register No: </b>{student.name}</h6>
+          <h6><b>Open Course Code: </b>{student.openCourseCode.toUpperCase()}</h6>
+          <h6><b>Open Course: </b>{student.openCourse}</h6>
+          
+        </div>}
+        
       </div>
     </div>
   );
 }
 
-export default AdminLogin;
+export default Display;

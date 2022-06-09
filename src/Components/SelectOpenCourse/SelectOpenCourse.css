@@ -62,6 +62,23 @@
     background-color: rgb(7, 182, 123);
     border: none;
 }
+.opMenu:nth-child(odd){
+    background-color: rgba(79, 51, 15, 0.138);
+}
+.opMenu{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.opMenu div{
+    width: 100%;
+}
+.dividerBar{
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.307);
+    width: 100%;
+}
 @media only screen and (max-width: 600px) {
     .oc-container{
         margin-top: 100px;

@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from "react";
 import * as xlsx from "xlsx";
-import "./UploadStudent.css";
+import "./UploadCourse.css";
 import { TextField } from "@mui/material";
 import db from "../../Config/Firebase";
-import { replaceSpecialCharecters } from "../../commonFunctions/idGenerate";
-import { setDoc, doc, getDocs, collection } from "firebase/firestore";
+import {replaceSpecialCharecters} from '../../commonFunctions/idGenerate'
+import { setDoc, doc ,getDoc} from "firebase/firestore";
 
-function UploadStudent() {
+function UploadCourse() {
   const [jsonFile, setJsonFile] = useState([]);
   const [load, setLoad] = useState({ upload: false, course: true });
-  const [count, setCount]=useState(0)
-  const [fileName, setFileName]=useState("")
   const [fileMessage, setFileMessage] = useState({
     message: "Select a file or drag here",
     color: "black",
   });
   const [btnBlock, setBtnBlock] = useState(true);
   const [course, setCourse] = useState("");
-  const [courses, setCourses] = useState([]);
+  const [fileName, setFileName] = useState("")
   const readUploadFile = (e) => {
     e.preventDefault();
     var x=e.target.value.replace(/^.*[\\\/]/, '')
@@ -39,16 +37,16 @@ function UploadStudent() {
         setJsonFile(json);
         if (
           json[0] &&
-          json[0].hasOwnProperty("regNo") &&
-          json[0].hasOwnProperty("Name")
-        ) {
+          json[0].hasOwnProperty("code") &&
+          json[0].hasOwnProperty("course") &&
+          json[0].hasOwnProperty("subject") &&
+          json[0].hasOwnProperty("offeredBy")) {
           setFileName(x)
           setBtnBlock(false);
         } else {
           setBtnBlock(true);
           setFileMessage({
-            message:
-              "select xlsx file with column names regNo, name",
+            message: "select xlsx file with column names code, offeredBy, subject,course",
             color: "red",
           });
         }
@@ -57,64 +55,32 @@ function UploadStudent() {
     }
   };
   const onHandleUpload = async () => {
-    setBtnBlock(true);
-    const promises=jsonFile.map(async(item)=>{
-      await setDoc(doc(db, "Students", replaceSpecialCharecters(item.regNo)), {
-        courseName: course,
-        name:item.Name,
-        regNo:item.regNo,
-        openCourse:"Not Selected"
-      }).then(()=>{
-        console.log(" files inserted");
-        setBtnBlock(true)
-      }).catch((error)=>{
-        console.log(error);
-      })
-      
-    })
-    await Promise.all(promises);
-    alert("Inserted")
-    setBtnBlock(false)
-    
+    setBtnBlock(true)
+    await setDoc(doc(db, "CoursesFor", replaceSpecialCharecters(course)), {
+      courseName:course,
+      arr:jsonFile
+    }).then(()=>{
+      alert("inserted");
+      setBtnBlock(false)
+    });
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "CoursesFor"));
-      setCourses(querySnapshot.docs);
-      setCourse(querySnapshot.docs[0].data().courseName)
-      setLoad({...load, course:false})
-    }
-    fetchData()
-      .catch(console.error);
-  }, [])
   return (
     <div className="uploadContainer">
-      <h2>Upload Student Details</h2>
+      <h2>Upload Course Details</h2>
       <p className="lead">
         Insert file in <span>Excel Format</span>
       </p>
       <div className="uploadBox">
-        {load.course ? (
-          <div className="form-select ustd-select">
-            Loading...
-          </div>
-        ) : (
-        <select
-          className="form-select ustd-select"
+        <TextField
+          className="input-field form-control"
+          id="outlined-basic"
+          label="Course Name"
+          variant="outlined"
           value={course}
-          onChange={(e) => {
-            setCourse(e.target.value);
+          onChange={(e)=>{
+            setCourse(e.target.value.toUpperCase())
           }}
-        >
-          {courses && courses.map((obj, index) => {
-            return (
-              <option key={index} value={obj.data().courseName}>
-                {obj.data().courseName}
-              </option>
-            );
-          })}
-        </select>
-        )} 
+        />
         <form id="file-upload-form" className="uploader">
           <label htmlFor="file-upload" id="file-drag">
             <img id="file-image" src="#" alt="Preview" className="hidden" />
@@ -148,20 +114,13 @@ function UploadStudent() {
         <button
           className="uploadBtn"
           onClick={onHandleUpload}
-          disabled={btnBlock || course === ""}
+          disabled={btnBlock || course===""}
         >
           {load.upload ? "Loading..." : "Upload"}
-        </button>
-        <button
-          onClick={async () => {
-            console.log(count)
-          }}
-        >
-          click
         </button>
       </div>
     </div>
   );
 }
 
-export default UploadStudent;
+export default UploadCourse;

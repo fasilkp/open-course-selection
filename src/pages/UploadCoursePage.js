@@ -1,13 +1,13 @@
 import React from 'react'
 import AdminHeader from '../Components/AdminHeader/AdminHeader'
-import UploadStudent from '../Components/UploadStudents/UploadStudent'
-function UploadStudentPage() {
+import UploadCourse from '../Components/UploadCourse/UploadCourse'
+function UploadCoursePage() {
   return (
     <>
     <AdminHeader></AdminHeader>
-    <UploadStudent/>
+    <UploadCourse/>
     </>
   )
 }
 
-export default UploadStudentPage
+export default UploadCoursePage
